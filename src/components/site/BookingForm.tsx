@@ -47,8 +47,10 @@ export function BookingForm() {
   const [service, setService] = useState("");
   const [time, setTime] = useState("");
   const [submitting, setSubmitting] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
+  const [confirmation, setConfirmation] = useState<BookingSummary | null>(null);
   const [errors, setErrors] = useState<Record<string, string>>({});
+
+  const formRef = (typeof window !== "undefined") ? null : null;
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
