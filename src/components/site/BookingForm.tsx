@@ -2,7 +2,7 @@ import { useState } from "react";
 import { z } from "zod";
 import { format } from "date-fns";
 import { et } from "date-fns/locale";
-import { CalendarIcon, Loader2, Check } from "lucide-react";
+import { CalendarIcon, Loader2, Check, User, Phone, Mail, Scissors, CalendarDays, Clock, StickyNote } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
@@ -12,8 +12,19 @@ import { Textarea } from "@/components/ui/textarea";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
 import { SERVICES } from "@/lib/site-data";
 import { cn } from "@/lib/utils";
+
+type BookingSummary = {
+  name: string;
+  phone: string;
+  email: string;
+  service: string;
+  booking_date: Date;
+  booking_time: string;
+  notes?: string;
+};
 
 const TIME_SLOTS = [
   "10:00", "10:30", "11:00", "11:30", "12:00", "12:30",
