@@ -180,6 +180,59 @@ export function BookingForm() {
         Saadame sulle e-posti teel kinnituse niipea kui broneeringu üle vaatame.
       </p>
     </form>
+
+    <Dialog open={!!confirmation} onOpenChange={(open) => { if (!open) setConfirmation(null); }}>
+      <DialogContent className="max-w-md border-primary/40">
+        <DialogHeader>
+          <div className="mx-auto mb-2 flex h-14 w-14 items-center justify-center rounded-full bg-primary/20">
+            <Check className="h-7 w-7 text-primary" />
+          </div>
+          <DialogTitle className="text-center font-display text-2xl">Broneering kinnitatud!</DialogTitle>
+          <DialogDescription className="text-center">
+            Aitäh, {confirmation?.name?.split(" ")[0]}! Allpool on sinu broneeringu kokkuvõte.
+          </DialogDescription>
+        </DialogHeader>
+
+        {confirmation && (
+          <div className="mt-2 grid gap-3 rounded-xl border border-border bg-muted/30 p-4 text-sm">
+            <SummaryRow icon={<User className="h-4 w-4" />} label="Nimi" value={confirmation.name} />
+            <SummaryRow icon={<Phone className="h-4 w-4" />} label="Telefon" value={confirmation.phone} />
+            <SummaryRow icon={<Mail className="h-4 w-4" />} label="E-post" value={confirmation.email} />
+            <SummaryRow icon={<Scissors className="h-4 w-4" />} label="Teenus" value={confirmation.service} />
+            <SummaryRow
+              icon={<CalendarDays className="h-4 w-4" />}
+              label="Kuupäev"
+              value={format(confirmation.booking_date, "EEEE, d. MMMM yyyy", { locale: et })}
+            />
+            <SummaryRow icon={<Clock className="h-4 w-4" />} label="Kellaaeg" value={confirmation.booking_time} />
+            {confirmation.notes && (
+              <SummaryRow icon={<StickyNote className="h-4 w-4" />} label="Märkused" value={confirmation.notes} />
+            )}
+          </div>
+        )}
+
+        <p className="mt-2 text-center text-xs text-muted-foreground">
+          Saadame e-kirja teel kinnituse, kui broneering on üle vaadatud.
+        </p>
+
+        <DialogFooter className="sm:justify-center">
+          <Button variant="outline" onClick={() => setConfirmation(null)}>Sulge</Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+    </>
+  );
+}
+
+function SummaryRow({ icon, label, value }: { icon: React.ReactNode; label: string; value: string }) {
+  return (
+    <div className="flex items-start justify-between gap-3">
+      <span className="flex items-center gap-2 text-muted-foreground">
+        {icon}
+        <span className="text-xs uppercase tracking-wider">{label}</span>
+      </span>
+      <span className="text-right font-medium text-foreground">{value}</span>
+    </div>
   );
 }
 
