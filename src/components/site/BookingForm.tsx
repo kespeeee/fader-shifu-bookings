@@ -2,7 +2,7 @@ import { useState } from "react";
 import { z } from "zod";
 import { format } from "date-fns";
 import { et } from "date-fns/locale";
-import { CalendarIcon, Loader2, Check } from "lucide-react";
+import { CalendarIcon, Loader2, Check, User, Phone, Mail, Scissors, CalendarDays, Clock, StickyNote } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
@@ -12,8 +12,19 @@ import { Textarea } from "@/components/ui/textarea";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
 import { SERVICES } from "@/lib/site-data";
 import { cn } from "@/lib/utils";
+
+type BookingSummary = {
+  name: string;
+  phone: string;
+  email: string;
+  service: string;
+  booking_date: Date;
+  booking_time: string;
+  notes?: string;
+};
 
 const TIME_SLOTS = [
   "10:00", "10:30", "11:00", "11:30", "12:00", "12:30",
@@ -36,13 +47,16 @@ export function BookingForm() {
   const [service, setService] = useState("");
   const [time, setTime] = useState("");
   const [submitting, setSubmitting] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
+  const [confirmation, setConfirmation] = useState<BookingSummary | null>(null);
   const [errors, setErrors] = useState<Record<string, string>>({});
+
+  const formRef = (typeof window !== "undefined") ? null : null;
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setErrors({});
-    const fd = new FormData(e.currentTarget);
+    const form = e.currentTarget;
+    const fd = new FormData(form);
 
     const parsed = schema.safeParse({
       name: fd.get("name"),
@@ -80,28 +94,16 @@ export function BookingForm() {
       toast.error("Broneeringu salvestamine ebaõnnestus. Proovi uuesti.");
       return;
     }
-    setSubmitted(true);
+    setConfirmation(parsed.data);
+    form.reset();
+    setDate(undefined);
+    setService("");
+    setTime("");
     toast.success("Broneering edukalt esitatud!");
   };
 
-  if (submitted) {
-    return (
-      <div className="rounded-2xl border border-primary/40 bg-card p-10 text-center shadow-card">
-        <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-primary/20">
-          <Check className="h-8 w-8 text-primary" />
-        </div>
-        <h3 className="font-display text-3xl">Aitäh!</h3>
-        <p className="mt-3 text-muted-foreground">
-          Broneering on vastu võetud. Võtame sinuga peagi ühendust kinnituse saamiseks.
-        </p>
-        <Button className="mt-6" variant="outline" onClick={() => { setSubmitted(false); setDate(undefined); setService(""); setTime(""); }}>
-          Uus broneering
-        </Button>
-      </div>
-    );
-  }
-
   return (
+    <>
     <form onSubmit={handleSubmit} className="grid gap-5 rounded-2xl border border-border bg-card p-6 shadow-card md:p-10">
       <div className="grid gap-5 md:grid-cols-2">
         <Field label="Nimi" error={errors.name}>
@@ -178,6 +180,59 @@ export function BookingForm() {
         Saadame sulle e-posti teel kinnituse niipea kui broneeringu üle vaatame.
       </p>
     </form>
+
+    <Dialog open={!!confirmation} onOpenChange={(open) => { if (!open) setConfirmation(null); }}>
+      <DialogContent className="max-w-md border-primary/40">
+        <DialogHeader>
+          <div className="mx-auto mb-2 flex h-14 w-14 items-center justify-center rounded-full bg-primary/20">
+            <Check className="h-7 w-7 text-primary" />
+          </div>
+          <DialogTitle className="text-center font-display text-2xl">Broneering kinnitatud!</DialogTitle>
+          <DialogDescription className="text-center">
+            Aitäh, {confirmation?.name?.split(" ")[0]}! Allpool on sinu broneeringu kokkuvõte.
+          </DialogDescription>
+        </DialogHeader>
+
+        {confirmation && (
+          <div className="mt-2 grid gap-3 rounded-xl border border-border bg-muted/30 p-4 text-sm">
+            <SummaryRow icon={<User className="h-4 w-4" />} label="Nimi" value={confirmation.name} />
+            <SummaryRow icon={<Phone className="h-4 w-4" />} label="Telefon" value={confirmation.phone} />
+            <SummaryRow icon={<Mail className="h-4 w-4" />} label="E-post" value={confirmation.email} />
+            <SummaryRow icon={<Scissors className="h-4 w-4" />} label="Teenus" value={confirmation.service} />
+            <SummaryRow
+              icon={<CalendarDays className="h-4 w-4" />}
+              label="Kuupäev"
+              value={format(confirmation.booking_date, "EEEE, d. MMMM yyyy", { locale: et })}
+            />
+            <SummaryRow icon={<Clock className="h-4 w-4" />} label="Kellaaeg" value={confirmation.booking_time} />
+            {confirmation.notes && (
+              <SummaryRow icon={<StickyNote className="h-4 w-4" />} label="Märkused" value={confirmation.notes} />
+            )}
+          </div>
+        )}
+
+        <p className="mt-2 text-center text-xs text-muted-foreground">
+          Saadame e-kirja teel kinnituse, kui broneering on üle vaadatud.
+        </p>
+
+        <DialogFooter className="sm:justify-center">
+          <Button variant="outline" onClick={() => setConfirmation(null)}>Sulge</Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+    </>
+  );
+}
+
+function SummaryRow({ icon, label, value }: { icon: React.ReactNode; label: string; value: string }) {
+  return (
+    <div className="flex items-start justify-between gap-3">
+      <span className="flex items-center gap-2 text-muted-foreground">
+        {icon}
+        <span className="text-xs uppercase tracking-wider">{label}</span>
+      </span>
+      <span className="text-right font-medium text-foreground">{value}</span>
+    </div>
   );
 }
 
