@@ -55,7 +55,8 @@ export function BookingForm() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setErrors({});
-    const fd = new FormData(e.currentTarget);
+    const form = e.currentTarget;
+    const fd = new FormData(form);
 
     const parsed = schema.safeParse({
       name: fd.get("name"),
