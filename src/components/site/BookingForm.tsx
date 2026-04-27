@@ -103,6 +103,7 @@ export function BookingForm() {
   };
 
   return (
+    <>
     <form onSubmit={handleSubmit} className="grid gap-5 rounded-2xl border border-border bg-card p-6 shadow-card md:p-10">
       <div className="grid gap-5 md:grid-cols-2">
         <Field label="Nimi" error={errors.name}>
