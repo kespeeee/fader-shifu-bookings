@@ -94,26 +94,13 @@ export function BookingForm() {
       toast.error("Broneeringu salvestamine ebaõnnestus. Proovi uuesti.");
       return;
     }
-    setSubmitted(true);
+    setConfirmation(parsed.data);
+    form.reset();
+    setDate(undefined);
+    setService("");
+    setTime("");
     toast.success("Broneering edukalt esitatud!");
   };
-
-  if (submitted) {
-    return (
-      <div className="rounded-2xl border border-primary/40 bg-card p-10 text-center shadow-card">
-        <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-primary/20">
-          <Check className="h-8 w-8 text-primary" />
-        </div>
-        <h3 className="font-display text-3xl">Aitäh!</h3>
-        <p className="mt-3 text-muted-foreground">
-          Broneering on vastu võetud. Võtame sinuga peagi ühendust kinnituse saamiseks.
-        </p>
-        <Button className="mt-6" variant="outline" onClick={() => { setSubmitted(false); setDate(undefined); setService(""); setTime(""); }}>
-          Uus broneering
-        </Button>
-      </div>
-    );
-  }
 
   return (
     <form onSubmit={handleSubmit} className="grid gap-5 rounded-2xl border border-border bg-card p-6 shadow-card md:p-10">
