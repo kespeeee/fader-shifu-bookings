@@ -26,6 +26,7 @@ export type Database = {
           phone: string
           service: string
           status: string
+          time_slot_id: string | null
         }
         Insert: {
           booking_date: string
@@ -38,6 +39,7 @@ export type Database = {
           phone: string
           service: string
           status?: string
+          time_slot_id?: string | null
         }
         Update: {
           booking_date?: string
@@ -50,6 +52,42 @@ export type Database = {
           phone?: string
           service?: string
           status?: string
+          time_slot_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "bookings_time_slot_id_fkey"
+            columns: ["time_slot_id"]
+            isOneToOne: false
+            referencedRelation: "time_slots"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      time_slots: {
+        Row: {
+          booking_id: string | null
+          created_at: string
+          id: string
+          is_booked: boolean
+          slot_date: string
+          slot_time: string
+        }
+        Insert: {
+          booking_id?: string | null
+          created_at?: string
+          id?: string
+          is_booked?: boolean
+          slot_date: string
+          slot_time: string
+        }
+        Update: {
+          booking_id?: string | null
+          created_at?: string
+          id?: string
+          is_booked?: boolean
+          slot_date?: string
+          slot_time?: string
         }
         Relationships: []
       }
@@ -79,6 +117,17 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      book_slot: {
+        Args: {
+          _email: string
+          _name: string
+          _notes?: string
+          _phone: string
+          _service: string
+          _slot_id: string
+        }
+        Returns: string
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
