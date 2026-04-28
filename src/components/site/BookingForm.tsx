@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { z } from "zod";
-import { format } from "date-fns";
+import { format, parseISO } from "date-fns";
 import { et } from "date-fns/locale";
 import { CalendarIcon, Loader2, Check, User, Phone, Mail, Scissors, CalendarDays, Clock, StickyNote } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
@@ -26,31 +26,60 @@ type BookingSummary = {
   notes?: string;
 };
 
-const TIME_SLOTS = [
-  "10:00", "10:30", "11:00", "11:30", "12:00", "12:30",
-  "13:00", "13:30", "14:00", "14:30", "15:00", "15:30",
-  "16:00", "16:30", "17:00", "17:30", "18:00", "18:30",
-];
+type AvailableSlot = { id: string; slot_date: string; slot_time: string };
 
 const schema = z.object({
   name: z.string().trim().min(2, "Nimi on liiga lühike").max(100),
   phone: z.string().trim().min(5, "Telefoninumber on liiga lühike").max(30),
   email: z.string().trim().email("Vigane e-posti aadress").max(255),
   service: z.string().min(1, "Vali teenus"),
-  booking_date: z.date({ required_error: "Vali kuupäev" }),
-  booking_time: z.string().min(1, "Vali kellaaeg"),
+  slot_id: z.string().min(1, "Vali aeg"),
   notes: z.string().max(1000).optional(),
 });
 
 export function BookingForm() {
+  const [allSlots, setAllSlots] = useState<AvailableSlot[]>([]);
+  const [slotsLoading, setSlotsLoading] = useState(true);
   const [date, setDate] = useState<Date | undefined>();
   const [service, setService] = useState("");
-  const [time, setTime] = useState("");
+  const [slotId, setSlotId] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [confirmation, setConfirmation] = useState<BookingSummary | null>(null);
   const [errors, setErrors] = useState<Record<string, string>>({});
 
-  const formRef = (typeof window !== "undefined") ? null : null;
+  // Load all available (non-booked) slots from today onwards
+  useEffect(() => {
+    const load = async () => {
+      setSlotsLoading(true);
+      const today = format(new Date(), "yyyy-MM-dd");
+      const { data, error } = await supabase
+        .from("time_slots")
+        .select("id, slot_date, slot_time")
+        .eq("is_booked", false)
+        .gte("slot_date", today)
+        .order("slot_date")
+        .order("slot_time");
+      if (error) toast.error("Aegade laadimine ebaõnnestus");
+      setAllSlots((data ?? []) as AvailableSlot[]);
+      setSlotsLoading(false);
+    };
+    load();
+  }, []);
+
+  // Set of dates that have at least one available slot
+  const availableDates = useMemo(() => {
+    return new Set(allSlots.map((s) => s.slot_date));
+  }, [allSlots]);
+
+  // Times for selected date
+  const timesForDate = useMemo(() => {
+    if (!date) return [];
+    const ds = format(date, "yyyy-MM-dd");
+    return allSlots.filter((s) => s.slot_date === ds);
+  }, [allSlots, date]);
+
+  // Reset slot when date changes
+  useEffect(() => { setSlotId(""); }, [date]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -63,8 +92,7 @@ export function BookingForm() {
       phone: fd.get("phone"),
       email: fd.get("email"),
       service,
-      booking_date: date,
-      booking_time: time,
+      slot_id: slotId,
       notes: fd.get("notes") || undefined,
     });
 
@@ -78,33 +106,66 @@ export function BookingForm() {
       return;
     }
 
+    const slot = allSlots.find((s) => s.id === parsed.data.slot_id);
+    if (!slot) {
+      toast.error("Valitud aeg ei ole enam saadaval");
+      return;
+    }
+
     setSubmitting(true);
-    const { error } = await supabase.from("bookings").insert({
-      name: parsed.data.name,
-      phone: parsed.data.phone,
-      email: parsed.data.email,
-      service: parsed.data.service,
-      booking_date: format(parsed.data.booking_date, "yyyy-MM-dd"),
-      booking_time: parsed.data.booking_time,
-      notes: parsed.data.notes ?? null,
+    const { error } = await supabase.rpc("book_slot", {
+      _slot_id: parsed.data.slot_id,
+      _name: parsed.data.name,
+      _phone: parsed.data.phone,
+      _email: parsed.data.email,
+      _service: parsed.data.service,
+      _notes: parsed.data.notes ?? null,
     });
     setSubmitting(false);
 
     if (error) {
-      toast.error("Broneeringu salvestamine ebaõnnestus. Proovi uuesti.");
+      const msg = error.message?.includes("juba broneeritud")
+        ? "See aeg sai just broneeritud. Palun vali uus."
+        : "Broneeringu salvestamine ebaõnnestus. Proovi uuesti.";
+      toast.error(msg);
+      // Refresh slots
+      const today = format(new Date(), "yyyy-MM-dd");
+      const { data } = await supabase
+        .from("time_slots").select("id, slot_date, slot_time")
+        .eq("is_booked", false).gte("slot_date", today)
+        .order("slot_date").order("slot_time");
+      setAllSlots((data ?? []) as AvailableSlot[]);
       return;
     }
-    setConfirmation(parsed.data);
+
+    setConfirmation({
+      name: parsed.data.name,
+      phone: parsed.data.phone,
+      email: parsed.data.email,
+      service: parsed.data.service,
+      booking_date: parseISO(slot.slot_date),
+      booking_time: slot.slot_time,
+      notes: parsed.data.notes,
+    });
     form.reset();
     setDate(undefined);
     setService("");
-    setTime("");
+    setSlotId("");
+    setAllSlots((prev) => prev.filter((s) => s.id !== slot.id));
     toast.success("Broneering edukalt esitatud!");
   };
+
+  const noAvailability = !slotsLoading && allSlots.length === 0;
 
   return (
     <>
     <form onSubmit={handleSubmit} className="grid gap-5 rounded-2xl border border-border bg-card p-6 shadow-card md:p-10">
+      {noAvailability && (
+        <div className="rounded-lg border border-primary/30 bg-primary/10 p-4 text-center text-sm">
+          Hetkel ei ole vabu aegu. Palun proovi peagi uuesti või võta meiega ühendust.
+        </div>
+      )}
+
       <div className="grid gap-5 md:grid-cols-2">
         <Field label="Nimi" error={errors.name}>
           <Input name="name" placeholder="Sinu nimi" required />
@@ -132,16 +193,17 @@ export function BookingForm() {
       </Field>
 
       <div className="grid gap-5 md:grid-cols-2">
-        <Field label="Kuupäev" error={errors.booking_date}>
+        <Field label="Kuupäev" error={errors.slot_id}>
           <Popover>
             <PopoverTrigger asChild>
               <Button
                 type="button"
                 variant="outline"
+                disabled={slotsLoading || noAvailability}
                 className={cn("w-full justify-start text-left font-normal", !date && "text-muted-foreground")}
               >
                 <CalendarIcon className="mr-2 h-4 w-4" />
-                {date ? format(date, "d. MMMM yyyy", { locale: et }) : "Vali kuupäev"}
+                {slotsLoading ? "Laen..." : date ? format(date, "d. MMMM yyyy", { locale: et }) : "Vali kuupäev"}
               </Button>
             </PopoverTrigger>
             <PopoverContent className="w-auto p-0" align="start">
@@ -149,7 +211,10 @@ export function BookingForm() {
                 mode="single"
                 selected={date}
                 onSelect={setDate}
-                disabled={(d) => d < new Date(new Date().setHours(0, 0, 0, 0)) || d.getDay() === 0}
+                disabled={(d) => {
+                  const ds = format(d, "yyyy-MM-dd");
+                  return !availableDates.has(ds);
+                }}
                 locale={et}
                 className={cn("p-3 pointer-events-auto")}
               />
@@ -157,12 +222,14 @@ export function BookingForm() {
           </Popover>
         </Field>
 
-        <Field label="Kellaaeg" error={errors.booking_time}>
-          <Select value={time} onValueChange={setTime}>
-            <SelectTrigger><SelectValue placeholder="Vali kellaaeg" /></SelectTrigger>
+        <Field label="Kellaaeg">
+          <Select value={slotId} onValueChange={setSlotId} disabled={!date || timesForDate.length === 0}>
+            <SelectTrigger>
+              <SelectValue placeholder={!date ? "Vali enne kuupäev" : timesForDate.length === 0 ? "Aegu pole" : "Vali kellaaeg"} />
+            </SelectTrigger>
             <SelectContent>
-              {TIME_SLOTS.map((t) => (
-                <SelectItem key={t} value={t}>{t}</SelectItem>
+              {timesForDate.map((s) => (
+                <SelectItem key={s.id} value={s.id}>{s.slot_time}</SelectItem>
               ))}
             </SelectContent>
           </Select>
@@ -173,11 +240,11 @@ export function BookingForm() {
         <Textarea name="notes" placeholder="Kas on midagi, mida peaksin teadma?" rows={4} />
       </Field>
 
-      <Button type="submit" size="lg" disabled={submitting} className="h-14 font-display text-lg tracking-wider">
+      <Button type="submit" size="lg" disabled={submitting || noAvailability} className="h-14 font-display text-lg tracking-wider">
         {submitting ? <><Loader2 className="mr-2 h-5 w-5 animate-spin" />Saadan...</> : "Kinnita broneering"}
       </Button>
       <p className="text-center text-xs text-muted-foreground">
-        Saadame sulle e-posti teel kinnituse niipea kui broneeringu üle vaatame.
+        Broneering kinnitatakse koheselt — sinu aeg on kindlustatud.
       </p>
     </form>
 
@@ -189,7 +256,7 @@ export function BookingForm() {
           </div>
           <DialogTitle className="text-center font-display text-2xl">Broneering kinnitatud!</DialogTitle>
           <DialogDescription className="text-center">
-            Aitäh, {confirmation?.name?.split(" ")[0]}! Allpool on sinu broneeringu kokkuvõte.
+            Aitäh, {confirmation?.name?.split(" ")[0]}! Sinu aeg on kindlustatud.
           </DialogDescription>
         </DialogHeader>
 
@@ -210,10 +277,6 @@ export function BookingForm() {
             )}
           </div>
         )}
-
-        <p className="mt-2 text-center text-xs text-muted-foreground">
-          Saadame e-kirja teel kinnituse, kui broneering on üle vaadatud.
-        </p>
 
         <DialogFooter className="sm:justify-center">
           <Button variant="outline" onClick={() => setConfirmation(null)}>Sulge</Button>
