@@ -119,7 +119,7 @@ export function BookingForm() {
       _phone: parsed.data.phone,
       _email: parsed.data.email,
       _service: parsed.data.service,
-      _notes: parsed.data.notes ?? null,
+      _notes: parsed.data.notes,
     });
     setSubmitting(false);
 
