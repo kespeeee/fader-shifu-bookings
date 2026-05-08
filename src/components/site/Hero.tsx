@@ -22,7 +22,7 @@ export function Hero() {
       <div className="mx-auto flex min-h-[calc(100svh-6rem)] max-w-5xl flex-col items-center justify-center px-6 py-16 text-center">
         <div className="fade-in-up inline-flex items-center gap-2 rounded-full border border-border bg-card/60 px-4 py-1.5 text-xs uppercase tracking-[0.3em] text-muted-foreground backdrop-blur">
           <Scissors className="h-3 w-3 text-primary" />
-          Tallinna parim barber shop
+          Võru barber shop
         </div>
 
         <h1 className="fade-in-up mt-8 font-display text-5xl font-bold leading-[0.9] sm:text-7xl md:text-8xl lg:text-9xl">
@@ -34,7 +34,7 @@ export function Hero() {
         </p>
 
         <p className="fade-in-up mt-3 max-w-lg text-sm text-muted-foreground sm:text-base">
-          Eliitfeidid, terav kontuur ja päris habemekunst — kõik ühe katuse all.
+          Feidid, terav kontuur ja habemekunst — Võrus.
         </p>
 
         <div className="fade-in-up mt-10 flex flex-col gap-3 sm:flex-row">
@@ -46,13 +46,10 @@ export function Hero() {
           </Button>
         </div>
 
-        <div className="fade-in-up mt-12 flex items-center gap-6 text-sm text-muted-foreground">
-          <div className="flex items-center gap-1">
-            {Array.from({ length: 5 }).map((_, i) => (
-              <Star key={i} className="h-4 w-4 fill-primary text-primary" />
-            ))}
-          </div>
-          <span>500+ rahulolevat klienti</span>
+        <div className="fade-in-up mt-12 flex items-center gap-2 text-sm text-muted-foreground">
+          {Array.from({ length: 5 }).map((_, i) => (
+            <Star key={i} className="h-4 w-4 fill-primary text-primary" />
+          ))}
         </div>
       </div>
     </section>

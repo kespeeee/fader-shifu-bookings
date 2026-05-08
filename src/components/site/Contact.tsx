@@ -1,6 +1,6 @@
 import { SITE } from "@/lib/site-data";
 import { SectionHeader } from "./Booking";
-import { MapPin, Phone, Mail, Clock, Instagram, MessageCircle } from "lucide-react";
+import { MapPin, Phone, Mail, Instagram, MessageCircle } from "lucide-react";
 
 export function Contact() {
   return (
@@ -13,7 +13,7 @@ export function Contact() {
           <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-card">
             <iframe
               title="Asukoht kaardil"
-              src="https://www.google.com/maps?q=Tallinn,+Estonia&output=embed"
+              src="https://www.google.com/maps?q=Võru,+Estonia&output=embed"
               className="h-[450px] w-full grayscale"
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
@@ -22,23 +22,13 @@ export function Contact() {
 
           {/* Info */}
           <div className="space-y-6">
-            <InfoRow icon={MapPin} title="Aadress" lines={[SITE.address]} />
+            <InfoRow icon={MapPin} title="Asukoht" lines={[SITE.address]} />
             <InfoRow icon={Phone} title="Telefon" lines={[SITE.phone]} href={`tel:${SITE.phone.replace(/\s/g, "")}`} />
             <InfoRow icon={Mail} title="E-post" lines={[SITE.email]} href={`mailto:${SITE.email}`} />
 
-            <div className="rounded-2xl border border-border bg-card p-6">
-              <div className="mb-4 flex items-center gap-3">
-                <Clock className="h-5 w-5 text-primary" />
-                <h3 className="font-display text-xl tracking-wide">Lahtiolekuajad</h3>
-              </div>
-              <ul className="space-y-2 text-sm">
-                {SITE.hours.map((h) => (
-                  <li key={h.day} className="flex justify-between border-b border-border/40 py-1.5 last:border-0">
-                    <span className="text-muted-foreground">{h.day}</span>
-                    <span className="font-medium">{h.time}</span>
-                  </li>
-                ))}
-              </ul>
+            <div className="rounded-2xl border border-border bg-card p-6 text-sm text-muted-foreground">
+              Fikseeritud lahtiolekuaegu pole — broneeri vaba aeg otse veebist.
+              Vali endale sobiv kuupäev ja kellaaeg <a href="#broneeri" className="text-primary underline">broneerimisvormist</a>.
             </div>
 
             <div className="flex gap-3">
