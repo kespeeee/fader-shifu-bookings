@@ -22,7 +22,7 @@ export function Hero() {
       <div className="mx-auto flex min-h-[calc(100svh-6rem)] max-w-5xl flex-col items-center justify-center px-6 py-16 text-center">
         <div className="fade-in-up inline-flex items-center gap-2 rounded-full border border-border bg-card/60 px-4 py-1.5 text-xs uppercase tracking-[0.3em] text-muted-foreground backdrop-blur">
           <Scissors className="h-3 w-3 text-primary" />
-          Tallinna parim barber shop
+          Võru barber shop
         </div>
 
         <h1 className="fade-in-up mt-8 font-display text-5xl font-bold leading-[0.9] sm:text-7xl md:text-8xl lg:text-9xl">
