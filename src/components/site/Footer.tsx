@@ -17,7 +17,7 @@ export function Footer() {
         <div>
           <Logo />
           <p className="mt-4 max-w-xs text-sm text-muted-foreground">
-            {SITE.tagline} Premium barber shop Tallinnas.
+            {SITE.tagline} Barber shop Võrus.
           </p>
         </div>
 

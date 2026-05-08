@@ -34,7 +34,7 @@ export function Hero() {
         </p>
 
         <p className="fade-in-up mt-3 max-w-lg text-sm text-muted-foreground sm:text-base">
-          Eliitfeidid, terav kontuur ja päris habemekunst — kõik ühe katuse all.
+          Feidid, terav kontuur ja habemekunst — Võrus.
         </p>
 
         <div className="fade-in-up mt-10 flex flex-col gap-3 sm:flex-row">
@@ -46,13 +46,10 @@ export function Hero() {
           </Button>
         </div>
 
-        <div className="fade-in-up mt-12 flex items-center gap-6 text-sm text-muted-foreground">
-          <div className="flex items-center gap-1">
-            {Array.from({ length: 5 }).map((_, i) => (
-              <Star key={i} className="h-4 w-4 fill-primary text-primary" />
-            ))}
-          </div>
-          <span>500+ rahulolevat klienti</span>
+        <div className="fade-in-up mt-12 flex items-center gap-2 text-sm text-muted-foreground">
+          {Array.from({ length: 5 }).map((_, i) => (
+            <Star key={i} className="h-4 w-4 fill-primary text-primary" />
+          ))}
         </div>
       </div>
     </section>

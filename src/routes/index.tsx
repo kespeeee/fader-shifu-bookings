@@ -15,14 +15,14 @@ import { Toaster } from "@/components/ui/sonner";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "FaderShifu Barber Shop — Täpsed lõiked. Eliitfeidid." },
+      { title: "FaderShifu Barber Shop — I make you win. Võru" },
       {
         name: "description",
         content:
-          "FaderShifu Barber Shop Tallinnas — premium feidid, juukselõikused ja habemehooldus. Broneeri aeg veebis.",
+          "FaderShifu Barber Shop Võrus — feidid, lõikused, habe ja kontuurid. Broneeri aeg otse veebist.",
       },
-      { property: "og:title", content: "FaderShifu Barber Shop — Tallinn" },
-      { property: "og:description", content: "Eliitfeidid ja habemekunst. Broneeri aeg veebis." },
+      { property: "og:title", content: "FaderShifu Barber Shop — Võru" },
+      { property: "og:description", content: "Feidid, habe ja kontuurid Võrus. Broneeri aeg veebis." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
