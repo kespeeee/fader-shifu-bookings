@@ -13,7 +13,7 @@ export function Contact() {
           <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-card">
             <iframe
               title="Asukoht kaardil"
-              src="https://www.google.com/maps?q=Võru,+Estonia&output=embed"
+              src="https://www.google.com/maps?q=Tallinna+mnt+36,+65605+Võru,+Estonia&output=embed"
               className="h-[450px] w-full grayscale"
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"

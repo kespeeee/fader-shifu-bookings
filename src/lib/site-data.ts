@@ -6,7 +6,7 @@ export const SITE = {
   email: "fadershifu@gmail.com",
   whatsapp: "+37258548877",
   instagram: "FaderShifu",
-  address: "Võru",
+  address: "Tallinna mnt 36, 65605 Võru, Võrumaa, Estonia",
   // Lahtiolekuajad puuduvad — broneerimine vastavalt barberi vabadele aegadele
   hours: [] as { day: string; time: string }[],
 };
