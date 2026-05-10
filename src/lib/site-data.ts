@@ -37,5 +37,5 @@ export const GALLERY_FILTERS = [
 export const GALLERY = Array.from({ length: 12 }).map((_, i) => ({
   id: i,
   category: ["fades", "beards", "kids", "fades"][i % 4],
-  title: ["Kõrge feid", "Habemekontuur", "Lastelõikus", "Tekstuur top"][i % 4],
+  title: ["Kõrge feid", "Habe vorm", "Lastelõikus", "Tekstuur top"][i % 4],
 }));
