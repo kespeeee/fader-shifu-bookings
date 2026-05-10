@@ -14,8 +14,8 @@ export const SITE = {
 export const SERVICES = [
   { name: "Lõikus / Fade", desc: "Täpne lõikus ja feid sinu stiili järgi.", price: "25 €" },
   { name: "Disain", desc: "Eraldi disainielement või muster lõikusele.", price: "+5 €" },
-  { name: "Habe", desc: "Kontuurid, vormimine ja viimistlus.", price: "+5 €" },
-  { name: "Kulmud", desc: "Korrektsioon ja puhas kontuur.", price: "+5 €" },
+  { name: "Habe", desc: "Vormimine, trimmimine ja viimistlus.", price: "+5 €" },
+  { name: "Kulmud", desc: "Korrektsioon ja puhas joon.", price: "+5 €" },
   { name: "Afterhours", desc: "Lõikus väljaspool tavalist aega.", price: "+5 €" },
 ];
 
