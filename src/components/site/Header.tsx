@@ -1,15 +1,17 @@
 import { useEffect, useState } from "react";
 import { Logo } from "./Logo";
 import { Button } from "@/components/ui/button";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ShoppingBag } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Link } from "@tanstack/react-router";
+import { useCart } from "@/lib/cart-store";
 
 const NAV = [
-  { href: "#teenused", label: "Teenused" },
-  { href: "#galerii", label: "Galerii" },
-  { href: "#fadershifust", label: "Minust" },
-  { href: "#tagasiside", label: "Tagasiside" },
-  { href: "#kontakt", label: "Kontakt" },
+  { href: "/#teenused", label: "Teenused" },
+  { href: "/#galerii", label: "Galerii" },
+  { href: "/pood", label: "Pood" },
+  { href: "/#fadershifust", label: "Minust" },
+  { href: "/#kontakt", label: "Kontakt" },
 ];
 
 export function Header() {
