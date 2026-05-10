@@ -2,7 +2,7 @@ import { BookingForm } from "./BookingForm";
 
 export function Booking() {
   return (
-    <section id="broneeri" className="relative border-t border-border bg-background py-24">
+    <section id="broneeri" className="relative border-t border-border bg-transparent py-24">
       <div className="mx-auto max-w-3xl px-6">
         <SectionHeader eyebrow="Broneeri aeg" title="BRONEERI KOHE" />
         <p className="mb-10 text-center text-muted-foreground">

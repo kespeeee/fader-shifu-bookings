@@ -4,7 +4,7 @@ import { MapPin, Phone, Mail, Instagram, MessageCircle } from "lucide-react";
 
 export function Contact() {
   return (
-    <section id="kontakt" className="border-t border-border bg-background py-24">
+    <section id="kontakt" className="border-t border-border bg-transparent py-24">
       <div className="mx-auto max-w-7xl px-6">
         <SectionHeader eyebrow="Kontakt ja asukoht" title="LEIA MEID ÜLES" />
 

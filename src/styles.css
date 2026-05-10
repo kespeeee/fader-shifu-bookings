@@ -40,51 +40,48 @@
 :root {
   --radius: 0.5rem;
 
-  /* Black / White / Purple */
-  --background: oklch(0.08 0 0);                /* near black */
-  --foreground: oklch(0.98 0 0);                /* near white */
+  /* Light theme — purple → white gradient page */
+  --background: oklch(1 0 0);                   /* white */
+  --foreground: oklch(0.18 0.02 280);           /* near black w/ purple tint */
 
-  --card: oklch(0.12 0.005 280);
-  --card-foreground: oklch(0.98 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.18 0.02 280);
 
-  --popover: oklch(0.12 0.005 280);
-  --popover-foreground: oklch(0.98 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.18 0.02 280);
 
-  --primary: oklch(0.55 0.24 295);              /* bold purple */
-  --primary-foreground: oklch(0.98 0 0);
+  --primary: oklch(0.5 0.24 295);               /* bold purple */
+  --primary-foreground: oklch(0.99 0 0);
 
-  --secondary: oklch(0.18 0.01 280);
-  --secondary-foreground: oklch(0.98 0 0);
+  --secondary: oklch(0.96 0.02 295);
+  --secondary-foreground: oklch(0.25 0.05 295);
 
-  --muted: oklch(0.18 0.01 280);
-  --muted-foreground: oklch(0.7 0.02 280);
+  --muted: oklch(0.96 0.01 295);
+  --muted-foreground: oklch(0.45 0.04 285);
 
-  --accent: oklch(0.65 0.27 300);               /* brighter purple accent */
-  --accent-foreground: oklch(0.08 0 0);
+  --accent: oklch(0.6 0.27 300);
+  --accent-foreground: oklch(0.99 0 0);
 
-  --destructive: oklch(0.6 0.24 25);
-  --destructive-foreground: oklch(0.98 0 0);
+  --destructive: oklch(0.55 0.24 25);
+  --destructive-foreground: oklch(0.99 0 0);
 
-  --border: oklch(0.22 0.01 280);
-  --input: oklch(0.18 0.01 280);
-  --ring: oklch(0.55 0.24 295);
+  --border: oklch(0.88 0.02 290);
+  --input: oklch(0.94 0.01 290);
+  --ring: oklch(0.5 0.24 295);
 
-  --gradient-purple: linear-gradient(135deg, oklch(0.55 0.24 295), oklch(0.4 0.22 290));
-  --gradient-hero: linear-gradient(180deg, oklch(0.06 0 0) 0%, oklch(0.1 0.04 295) 100%);
+  --gradient-purple: linear-gradient(135deg, oklch(0.5 0.24 295), oklch(0.4 0.22 290));
+  --gradient-page: linear-gradient(180deg, oklch(0.55 0.24 295) 0%, oklch(0.78 0.13 295) 35%, oklch(0.95 0.04 295) 70%, oklch(1 0 0) 100%);
+  --gradient-hero: transparent;
   --gradient-pole: repeating-linear-gradient(
     45deg,
-    oklch(0.98 0 0) 0 12px,
-    oklch(0.08 0 0) 12px 24px,
-    oklch(0.55 0.24 295) 24px 36px,
-    oklch(0.08 0 0) 36px 48px
+    oklch(0.99 0 0) 0 12px,
+    oklch(0.18 0.02 280) 12px 24px,
+    oklch(0.5 0.24 295) 24px 36px,
+    oklch(0.18 0.02 280) 36px 48px
   );
 }
 
-.dark {
-  /* same as root — site is dark-only */
-  --background: oklch(0.08 0 0);
-  --foreground: oklch(0.98 0 0);
-}
+.dark { /* unused — site is light */ }
 
 @layer base {
   * {
@@ -96,10 +93,11 @@
   }
 
   body {
-    background-color: var(--color-background);
+    background: var(--gradient-page) fixed;
     color: var(--color-foreground);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
   }
 
   h1, h2, h3, h4 {
