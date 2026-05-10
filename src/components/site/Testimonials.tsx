@@ -5,7 +5,7 @@ import { Star, Quote } from "lucide-react";
 
 export function Testimonials() {
   return (
-    <section id="tagasiside" className="border-t border-border bg-background py-24">
+    <section id="tagasiside" className="border-t border-border bg-transparent py-24">
       <div className="mx-auto max-w-5xl px-6">
         <SectionHeader eyebrow="Tagasiside" title="MIDA KLIENDID ÜTLEVAD" />
 

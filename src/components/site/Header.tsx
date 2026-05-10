@@ -27,7 +27,7 @@ export function Header() {
     <header
       className={cn(
         "fixed top-0 z-50 w-full transition-all duration-300",
-        scrolled ? "border-b border-border bg-background/85 backdrop-blur-lg" : "bg-transparent"
+        scrolled ? "border-b border-border bg-white/70 backdrop-blur-lg" : "bg-transparent"
       )}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 md:px-8">
@@ -61,7 +61,7 @@ export function Header() {
       </div>
 
       {open && (
-        <div className="border-t border-border bg-background md:hidden">
+        <div className="border-t border-border bg-white/95 backdrop-blur md:hidden">
           <nav className="flex flex-col px-4 py-4">
             {NAV.map((n) => (
               <a

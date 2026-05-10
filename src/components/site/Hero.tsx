@@ -4,7 +4,7 @@ import { SITE } from "@/lib/site-data";
 
 export function Hero() {
   return (
-    <section id="top" className="relative isolate min-h-[100svh] overflow-hidden bg-gradient-hero pt-24">
+    <section id="top" className="relative isolate min-h-[100svh] overflow-hidden pt-24 text-white">
       {/* graffiti background accents */}
       <div className="pointer-events-none absolute inset-0 -z-10 opacity-20">
         <div className="absolute -left-20 top-32 h-96 w-96 rounded-full bg-primary blur-[120px]" />

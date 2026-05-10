@@ -12,7 +12,7 @@ export function Gallery() {
   const items = filter === "all" ? GALLERY : GALLERY.filter((g) => g.category === filter);
 
   return (
-    <section id="galerii" className="border-t border-border bg-background py-24">
+    <section id="galerii" className="border-t border-border bg-transparent py-24">
       <div className="mx-auto max-w-7xl px-6">
         <SectionHeader eyebrow="Minu tööd" title="GALERII" />
 
