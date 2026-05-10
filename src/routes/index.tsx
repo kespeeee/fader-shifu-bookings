@@ -19,10 +19,10 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "FaderShifu Barber Shop Võrus — feidid, lõikused, habe ja kontuurid. Broneeri aeg otse veebist.",
+          "FaderShifu Barber Shop Võrus — feidid, lõikused ja habe. Broneeri aeg otse veebist.",
       },
       { property: "og:title", content: "FaderShifu Barber Shop — Võru" },
-      { property: "og:description", content: "Feidid, habe ja kontuurid Võrus. Broneeri aeg veebis." },
+      { property: "og:description", content: "Feidid, habe ja stiil Võrus. Broneeri aeg veebis." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
