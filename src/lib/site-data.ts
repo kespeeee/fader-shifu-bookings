@@ -22,7 +22,7 @@ export const SERVICES = [
 export const TESTIMONIALS = [
   { name: "Marko T.", rating: 5, text: "Parim feid, mille olen saanud. Stefan teab täpselt mida teeb." },
   { name: "Karl R.", rating: 5, text: "Professionaalne suhtumine ja super tulemus. Soovitan kõigile!" },
-  { name: "Henri L.", rating: 5, text: "Habemekontuur on alati täpselt selline nagu vaja." },
+  { name: "Henri L.", rating: 5, text: "Habe on alati täpselt selline nagu vaja." },
   { name: "Tõnu K.", rating: 5, text: "Atmosfäär on top, muusika hea ja lõikus veel parem." },
   { name: "Andre P.", rating: 5, text: "Olen proovinud paljusid kohti — siia ma jään." },
 ];
