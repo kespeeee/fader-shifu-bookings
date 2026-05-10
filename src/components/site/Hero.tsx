@@ -29,12 +29,12 @@ export function Hero() {
           FADER<span className="text-gradient-purple">SHIFU</span>
         </h1>
 
-        <p className="fade-in-up mt-6 max-w-xl text-xl font-medium text-foreground/90 sm:text-2xl">
-          {SITE.tagline}
+        <p className="fade-in-up mt-8 font-display text-4xl font-bold tracking-wider sm:text-5xl md:text-6xl">
+          I make <span className="text-gradient-purple">YOU</span> win
         </p>
 
-        <p className="fade-in-up mt-3 max-w-lg text-sm text-muted-foreground sm:text-base">
-          Feidid, terav kontuur ja habemekunst — Võrus.
+        <p className="fade-in-up mt-4 max-w-lg text-sm text-muted-foreground sm:text-base">
+          Feidid, habe ja stiil — Võrus.
         </p>
 
         <div className="fade-in-up mt-10 flex flex-col gap-3 sm:flex-row">
