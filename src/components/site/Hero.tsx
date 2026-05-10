@@ -20,35 +20,35 @@ export function Hero() {
       </div>
 
       <div className="mx-auto flex min-h-[calc(100svh-6rem)] max-w-5xl flex-col items-center justify-center px-6 py-16 text-center">
-        <div className="fade-in-up inline-flex items-center gap-2 rounded-full border border-border bg-card/60 px-4 py-1.5 text-xs uppercase tracking-[0.3em] text-muted-foreground backdrop-blur">
-          <Scissors className="h-3 w-3 text-primary" />
+        <div className="fade-in-up inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/10 px-4 py-1.5 text-xs uppercase tracking-[0.3em] text-white/90 backdrop-blur">
+          <Scissors className="h-3 w-3" />
           Võru parim barber
         </div>
 
         <h1 className="fade-in-up mt-8 font-display text-5xl font-bold leading-[0.9] sm:text-7xl md:text-8xl lg:text-9xl">
-          FADER<span className="text-gradient-purple">SHIFU</span>
+          FADER<span className="text-white">SHIFU</span>
         </h1>
 
         <p className="fade-in-up mt-8 font-display text-4xl font-bold tracking-wider sm:text-5xl md:text-6xl">
-          I make <span className="text-gradient-purple">YOU</span> win
+          I make <span className="italic text-white drop-shadow-[0_0_20px_rgba(255,255,255,0.5)]">YOU</span> win
         </p>
 
-        <p className="fade-in-up mt-4 max-w-lg text-sm text-muted-foreground sm:text-base">
+        <p className="fade-in-up mt-4 max-w-lg text-sm text-white/80 sm:text-base">
           Feidid, habe ja stiil — Võrus.
         </p>
 
         <div className="fade-in-up mt-10 flex flex-col gap-3 sm:flex-row">
-          <Button asChild size="lg" className="h-14 px-10 font-display text-lg tracking-wider shadow-[0_0_40px_-8px_var(--primary)]">
+          <Button asChild size="lg" className="h-14 bg-white px-10 font-display text-lg tracking-wider text-primary hover:bg-white/90 shadow-[0_0_40px_-8px_rgba(255,255,255,0.6)]">
             <a href="#broneeri">Broneeri kohe</a>
           </Button>
-          <Button asChild size="lg" variant="outline" className="h-14 px-10 font-display text-lg tracking-wider">
+          <Button asChild size="lg" variant="outline" className="h-14 border-white/60 bg-transparent px-10 font-display text-lg tracking-wider text-white hover:bg-white/10 hover:text-white">
             <a href="#teenused">Vaata teenuseid</a>
           </Button>
         </div>
 
-        <div className="fade-in-up mt-12 flex items-center gap-2 text-sm text-muted-foreground">
+        <div className="fade-in-up mt-12 flex items-center gap-2 text-sm text-white/80">
           {Array.from({ length: 5 }).map((_, i) => (
-            <Star key={i} className="h-4 w-4 fill-primary text-primary" />
+            <Star key={i} className="h-4 w-4 fill-white text-white" />
           ))}
         </div>
       </div>
