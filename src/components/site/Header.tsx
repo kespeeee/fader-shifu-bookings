@@ -33,33 +33,36 @@ export function Header() {
       )}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 md:px-8">
-        <a href="#top"><Logo /></a>
+        <Link to="/" hash="top"><Logo /></Link>
 
         <nav className="hidden items-center gap-8 md:flex">
           {NAV.map((n) => (
             <a
               key={n.href}
               href={n.href}
-              className="text-sm font-medium uppercase tracking-wider text-muted-foreground transition-colors hover:text-foreground"
+              className={cn(
+                "text-sm font-medium uppercase tracking-wider transition-colors",
+                scrolled ? "text-muted-foreground hover:text-foreground" : "text-white/85 hover:text-white"
+              )}
             >
               {n.label}
             </a>
           ))}
         </nav>
 
-        <div className="hidden md:block">
+        <div className="hidden items-center gap-3 md:flex">
+          <CartButton scrolled={scrolled} />
           <Button asChild variant="default" size="lg" className="font-display tracking-wider">
-            <a href="#broneeri">Broneeri kohe</a>
+            <a href="/#broneeri">Broneeri kohe</a>
           </Button>
         </div>
 
-        <button
-          className="md:hidden"
-          onClick={() => setOpen(!open)}
-          aria-label="Menüü"
-        >
-          {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-        </button>
+        <div className="flex items-center gap-3 md:hidden">
+          <CartButton scrolled={scrolled} />
+          <button onClick={() => setOpen(!open)} aria-label="Menüü" className={scrolled ? "" : "text-white"}>
+            {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+          </button>
+        </div>
       </div>
 
       {open && (
@@ -79,5 +82,26 @@ export function Header() {
         </div>
       )}
     </header>
+  );
+}
+
+function CartButton({ scrolled }: { scrolled: boolean }) {
+  const { count } = useCart();
+  return (
+    <Link
+      to="/pood"
+      aria-label="Ostukorv"
+      className={cn(
+        "relative inline-flex h-10 w-10 items-center justify-center rounded-full border transition",
+        scrolled ? "border-border text-foreground hover:bg-muted" : "border-white/40 text-white hover:bg-white/10"
+      )}
+    >
+      <ShoppingBag className="h-5 w-5" />
+      {count > 0 && (
+        <span className="absolute -right-1 -top-1 flex h-5 min-w-5 items-center justify-center rounded-full bg-primary px-1 text-[10px] font-bold text-primary-foreground">
+          {count}
+        </span>
+      )}
+    </Link>
   );
 }
