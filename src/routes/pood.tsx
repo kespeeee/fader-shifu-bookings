@@ -53,14 +53,14 @@ function ShopPage() {
       <Header />
       <main className="pt-28">
         <section className="mx-auto max-w-7xl px-6 py-12">
-          <Link to="/" className="mb-6 inline-flex items-center gap-2 text-sm text-white/90 hover:text-white">
+          <Link to="/" className="mb-6 inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground">
             <ArrowLeft className="h-4 w-4" /> Tagasi avalehele
           </Link>
 
-          <h1 className="font-display text-5xl font-bold tracking-wide text-white sm:text-6xl md:text-7xl">
-            POOD
+          <h1 className="font-display text-5xl font-bold tracking-wide text-foreground sm:text-6xl md:text-7xl">
+            <span className="text-gradient-purple">POOD</span>
           </h1>
-          <p className="mt-3 max-w-xl text-white/85">
+          <p className="mt-3 max-w-xl text-muted-foreground">
             FaderShifu tooted, hooldusvahendid ja kingikaardid — saadaval ka stuudios.
           </p>
         </section>

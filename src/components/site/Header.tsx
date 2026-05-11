@@ -42,7 +42,7 @@ export function Header() {
               href={n.href}
               className={cn(
                 "text-sm font-medium uppercase tracking-wider transition-colors",
-                scrolled ? "text-muted-foreground hover:text-foreground" : "text-white/85 hover:text-white"
+                scrolled ? "text-muted-foreground hover:text-foreground" : "text-foreground/80 hover:text-primary"
               )}
             >
               {n.label}
@@ -59,7 +59,7 @@ export function Header() {
 
         <div className="flex items-center gap-3 md:hidden">
           <CartButton scrolled={scrolled} />
-          <button onClick={() => setOpen(!open)} aria-label="Menüü" className={scrolled ? "" : "text-white"}>
+          <button onClick={() => setOpen(!open)} aria-label="Menüü" className={""}>
             {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </button>
         </div>
@@ -93,7 +93,7 @@ function CartButton({ scrolled }: { scrolled: boolean }) {
       aria-label="Ostukorv"
       className={cn(
         "relative inline-flex h-10 w-10 items-center justify-center rounded-full border transition",
-        scrolled ? "border-border text-foreground hover:bg-muted" : "border-white/40 text-white hover:bg-white/10"
+        scrolled ? "border-border text-foreground hover:bg-muted" : "border-border text-foreground hover:bg-muted"
       )}
     >
       <ShoppingBag className="h-5 w-5" />
