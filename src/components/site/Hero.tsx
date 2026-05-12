@@ -1,55 +1,99 @@
 import { Button } from "@/components/ui/button";
-import { Scissors, Star } from "lucide-react";
-import { SITE } from "@/lib/site-data";
+import { ArrowRight, Star } from "lucide-react";
 
 export function Hero() {
   return (
-    <section id="top" className="relative isolate min-h-[100svh] overflow-hidden pt-24">
-      {/* graffiti background accents */}
-      <div className="pointer-events-none absolute inset-0 -z-10 opacity-30">
-        <div className="absolute -left-20 top-32 h-96 w-96 rounded-full bg-primary blur-[140px]" />
-        <div className="absolute -right-20 bottom-10 h-80 w-80 rounded-full bg-accent blur-[140px]" />
+    <section
+      id="top"
+      className="relative isolate flex min-h-[100svh] items-center overflow-hidden pt-28 md:pt-32"
+    >
+      {/* ambient glow accents */}
+      <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
+        <div className="absolute left-1/2 top-1/3 h-[60vh] w-[60vh] -translate-x-1/2 rounded-full bg-primary/25 blur-[160px]" />
+        <div className="absolute -bottom-32 right-10 h-[40vh] w-[40vh] rounded-full bg-accent/30 blur-[140px]" />
       </div>
 
-      {/* barber pole stripe */}
-      <div className="absolute left-0 top-0 hidden h-full w-3 md:block">
-        <div className="barber-pole h-full w-full" />
-      </div>
-      <div className="absolute right-0 top-0 hidden h-full w-3 md:block">
-        <div className="barber-pole h-full w-full" />
-      </div>
+      <div className="mx-auto w-full max-w-6xl px-6 md:px-10">
+        <div className="flex flex-col items-start">
+          {/* eyebrow */}
+          <div className="fade-in-up inline-flex items-center gap-2 rounded-full border border-foreground/10 bg-white/40 px-4 py-1.5 text-[11px] font-medium uppercase tracking-[0.32em] text-foreground/70 backdrop-blur-md">
+            <span className="h-1.5 w-1.5 rounded-full bg-primary" />
+            Võru · Established Barber
+          </div>
 
-      <div className="mx-auto flex min-h-[calc(100svh-6rem)] max-w-5xl flex-col items-center justify-center px-6 py-16 text-center">
-        <div className="fade-in-up inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-4 py-1.5 text-xs uppercase tracking-[0.3em] text-primary backdrop-blur">
-          <Scissors className="h-3 w-3" />
-          Võru parim barber
-        </div>
+          {/* headline */}
+          <h1
+            className="fade-in-up mt-8 font-display text-[clamp(3rem,11vw,9rem)] font-bold leading-[0.85] tracking-tight text-foreground"
+            style={{ animationDelay: "80ms" }}
+          >
+            Sharp fades.
+            <br />
+            <span className="text-gradient-purple">Clean confidence.</span>
+          </h1>
 
-        <h1 className="fade-in-up mt-8 font-display text-5xl font-bold leading-[0.9] text-foreground sm:text-7xl md:text-8xl lg:text-9xl">
-          FADER<span className="text-gradient-purple">SHIFU</span>
-        </h1>
+          {/* subtext */}
+          <p
+            className="fade-in-up mt-8 max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg"
+            style={{ animationDelay: "180ms" }}
+          >
+            Premium barber Võrus. Kiired bookingud, puhtad fade'id ja
+            professionaalne kogemus.
+          </p>
 
-        <p className="fade-in-up mt-8 font-display text-4xl font-bold tracking-wider text-foreground sm:text-5xl md:text-6xl">
-          I make <span className="text-gradient-purple italic">YOU</span> win
-        </p>
+          {/* CTAs */}
+          <div
+            className="fade-in-up mt-10 flex w-full flex-col gap-3 sm:w-auto sm:flex-row"
+            style={{ animationDelay: "260ms" }}
+          >
+            <Button
+              asChild
+              size="lg"
+              className="group h-14 rounded-full px-8 font-display text-base tracking-[0.18em] shadow-[0_18px_40px_-16px_var(--primary)] transition-transform hover:-translate-y-0.5"
+            >
+              <a href="#broneeri">
+                Broneeri aeg
+                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+              </a>
+            </Button>
+            <Button
+              asChild
+              size="lg"
+              variant="outline"
+              className="h-14 rounded-full border-foreground/15 bg-white/40 px-8 font-display text-base tracking-[0.18em] text-foreground backdrop-blur-md hover:bg-white/70"
+            >
+              <a href="#galerii">Vaata töid</a>
+            </Button>
+          </div>
 
-        <p className="fade-in-up mt-4 max-w-lg text-sm text-muted-foreground sm:text-base">
-          Feidid, habe ja stiil — Võrus.
-        </p>
-
-        <div className="fade-in-up mt-10 flex flex-col gap-3 sm:flex-row">
-          <Button asChild size="lg" className="h-14 px-10 font-display text-lg tracking-wider shadow-[0_0_40px_-8px_var(--primary)]">
-            <a href="#broneeri">Broneeri kohe</a>
-          </Button>
-          <Button asChild size="lg" variant="outline" className="h-14 border-primary/40 px-10 font-display text-lg tracking-wider text-primary hover:bg-primary/10">
-            <a href="#teenused">Vaata teenuseid</a>
-          </Button>
-        </div>
-
-        <div className="fade-in-up mt-12 flex items-center gap-2 text-sm text-muted-foreground">
-          {Array.from({ length: 5 }).map((_, i) => (
-            <Star key={i} className="h-4 w-4 fill-primary text-primary" />
-          ))}
+          {/* social proof */}
+          <div
+            className="fade-in-up mt-8 flex items-center gap-4"
+            style={{ animationDelay: "340ms" }}
+          >
+            <div className="flex -space-x-2">
+              {[
+                "from-primary to-accent",
+                "from-accent to-primary",
+                "from-primary/80 to-foreground/60",
+              ].map((g, i) => (
+                <div
+                  key={i}
+                  className={`h-9 w-9 rounded-full border-2 border-white bg-gradient-to-br ${g}`}
+                />
+              ))}
+            </div>
+            <div className="flex flex-col">
+              <div className="flex items-center gap-0.5">
+                {Array.from({ length: 5 }).map((_, i) => (
+                  <Star key={i} className="h-3.5 w-3.5 fill-primary text-primary" />
+                ))}
+                <span className="ml-2 text-sm font-semibold text-foreground">5.0</span>
+              </div>
+              <span className="text-xs text-muted-foreground">
+                500+ rahulolevat klienti Võrumaal
+              </span>
+            </div>
+          </div>
         </div>
       </div>
     </section>
