@@ -18,7 +18,7 @@ export function Hero() {
           {/* eyebrow */}
           <div className="fade-in-up inline-flex items-center gap-2 rounded-full border border-foreground/10 bg-white/40 px-4 py-1.5 text-[11px] font-medium uppercase tracking-[0.32em] text-foreground/70 backdrop-blur-md">
             <span className="h-1.5 w-1.5 rounded-full bg-primary" />
-            Võru · Established Barber
+            Võru · Premium barber
           </div>
 
           {/* headline */}
@@ -26,9 +26,9 @@ export function Hero() {
             className="fade-in-up mt-8 font-display text-[clamp(3rem,11vw,9rem)] font-bold leading-[0.85] tracking-tight text-foreground"
             style={{ animationDelay: "80ms" }}
           >
-            Sharp fades.
+            Teravad fade'id.
             <br />
-            <span className="text-gradient-purple">Clean confidence.</span>
+            <span className="text-gradient-purple">Puhas enesekindlus.</span>
           </h1>
 
           {/* subtext */}
