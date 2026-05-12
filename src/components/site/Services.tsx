@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 
 export function Services() {
   return (
-    <section id="teenused" className="border-t border-border py-24">
+    <section id="teenused" className="py-24">
       <div className="mx-auto max-w-7xl px-6">
         <SectionHeader eyebrow="Teenused ja hinnad" title="MEISTRI MENÜÜ" />
 
@@ -20,7 +20,7 @@ export function Services() {
               </div>
               <h3 className="mb-2 font-display text-xl tracking-wide">{s.name}</h3>
               <p className="mb-4 min-h-[3rem] text-sm text-muted-foreground">{s.desc}</p>
-              <div className="flex items-end justify-between border-t border-border pt-4">
+              <div className="flex items-end justify-between pt-4">
                 <span className="text-xs uppercase tracking-wider text-muted-foreground">Alates</span>
                 <span className="font-display text-2xl text-primary">{s.price}</span>
               </div>
