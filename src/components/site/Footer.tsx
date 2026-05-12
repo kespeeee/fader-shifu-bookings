@@ -12,7 +12,7 @@ const LINKS = [
 
 export function Footer() {
   return (
-    <footer className="border-t border-white/15 bg-transparent py-12 text-white">
+    <footer className="bg-transparent py-12 text-white">
       <div className="mx-auto grid max-w-7xl gap-10 px-6 md:grid-cols-3">
         <div>
           <Logo />
@@ -61,7 +61,7 @@ export function Footer() {
         </div>
       </div>
 
-      <div className="mx-auto mt-10 max-w-7xl border-t border-white/15 px-6 pt-6">
+      <div className="mx-auto mt-10 max-w-7xl px-6 pt-6">
         <p className="text-center text-xs text-white/70">
           © {new Date().getFullYear()} FaderShifu Barber Shop. Kõik õigused kaitstud.
         </p>

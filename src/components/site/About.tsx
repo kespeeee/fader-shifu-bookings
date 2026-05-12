@@ -2,7 +2,7 @@ import { SectionHeader } from "./Booking";
 
 export function About() {
   return (
-    <section id="fadershifust" className="border-t border-border py-24">
+    <section id="fadershifust" className="py-24">
       <div className="mx-auto max-w-6xl px-6">
         <SectionHeader eyebrow="Tutvu meistriga" title="FADERSHIFUST" />
 
